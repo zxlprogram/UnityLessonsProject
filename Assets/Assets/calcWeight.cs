@@ -7,7 +7,7 @@ public class calcWeight : MonoBehaviour
     public float weight;
     public GameObject libra;
     public int whichPlat;
-
+    public Color color;
     public static float CalculateMeshVolume(Mesh mesh, Transform transform = null)
     {
         if (mesh == null)
@@ -45,18 +45,21 @@ public class calcWeight : MonoBehaviour
     void Start()
     {
         libra.GetComponent<Libra>().plat[whichPlat] = this.gameObject;
+        gameObject.GetComponent<Renderer>().material.color=color;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         weight = CalculateMeshVolume(collision.gameObject.GetComponent<MeshFilter>().mesh);
-        StartCoroutine(DelayMethod(collision));
+        gameObject.GetComponent<Renderer>().material.color = Color.red;
+        StartCoroutine(DelayMethod(collision.gameObject));
     }
-    IEnumerator DelayMethod(Collision collision)
+    IEnumerator DelayMethod(GameObject collision)
     {
         yield return new WaitForSeconds(1f);
-        Destroy(collision.gameObject); 
+        Destroy(collision); 
         weight = 0;
+        gameObject.GetComponent<Renderer>().material.color=color;
     }
     private void OnCollisionExit(Collision collision)
     {

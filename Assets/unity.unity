@@ -341,6 +341,7 @@ MonoBehaviour:
   weight: 0
   libra: {fileID: 0}
   whichPlat: 1
+  color: {r: 0.49803925, g: 0.5058824, b: 0.5176471, a: 0}
 --- !u!1 &1317079050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,6 +1049,7 @@ MonoBehaviour:
   weight: 0
   libra: {fileID: 0}
   whichPlat: 0
+  color: {r: 0.49411768, g: 0.5058824, b: 0.5137255, a: 1}
 --- !u!64 &2072230105
 MeshCollider:
   m_ObjectHideFlags: 0
