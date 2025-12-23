@@ -1,5 +1,5 @@
 # date
-start by: 2025-12-16 or more earlier
+start by: 2025-12-16 or earlier
 
 # author
 zxlprogram, GMLGY2VCrQ, hsifeng, yccct14, yuuuuu66
