@@ -50,10 +50,10 @@ the project put on github repo by zxlprogram
 added libra by zxlprogram
 
 # leak
-the story
-log shows on canva
-sound effects
-more obj files
+the story,
+log shows on canva,
+sound effects,
+more obj files,
 good-looking model for all object in project
 
 # HOW TO JOIN REPO?
