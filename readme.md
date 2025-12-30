@@ -17,7 +17,7 @@ cut the object
 move the piece and use the libra to compare it
 
 # description
-this is a Unity3D project for the unity lesson's final exam, used the EZ-slice mod and hsifeng builded the basic architecture, zxlprogram find the open-source program to research how does the mod working and build the libra.
+this is a Unity3D project for the unity lesson's final exam, used the EZ-slice mod and hsifeng builded the basic architecture, zxlprogram find the open-source program to research how does the mod working and build the libra. hsifeng import the knife model, cleaned up folders and yccct14 builded the game rule(pvp mode) and import the players model,also rewrite the splitter.cs to fit the project.
 
 this project are try to make a game, play a character to cut some object, the goal is trying to cut those object in closest weight(we suppose that all object have fixed density, so it have same result on comparing volume)
 
@@ -37,58 +37,23 @@ and the Libra have an array to save the weighing pan gameObject, and if you want
 Divergence theorem
 
 # resources
-.obj file: tank(online resource), human(online resource), cube monster(author: zxlprogram)
+.obj file: tank(online resource), human(online resource), cube monster(author: zxlprogram), knife(source: by hsifeng), player*2(imported by yccct14)
 
 # history
 2025-12-16
-the project architecture is finished by shifeng
+-the project architecture is finished by hsifeng
 
 2025-12-19
-the project put on github repo by zxlprogram
+-the project put on github repo by zxlprogram
 
 2025-12-21
-added libra by zxlprogram
+-added libra by zxlprogram
+
+2025-12-30
+-added the knife model by hsifeng
+-added the players model*2 and builded the gamerule of pvp mode,also add the UI label by yccct14
 
 # leak
 the story,
-log shows on canva,
 sound effects,
-more obj files,
-good-looking model for all object in project
-
-# HOW TO JOIN REPO?
-
-**第一步：下載 Git**
-前往官網下載並安裝 Git
-👉 https://git-scm.com/
-**第二步：建立 GitHub 帳號**
-用瀏覽器搜尋 GitHub
-使用 Google 帳號或 Email 註冊 GitHub
-記下你的 GitHub 使用者名稱（username）
-**第三步：把你的 GitHub 使用者名稱或gmail給我**
-**第四步：接受 GitHub 邀請**
-收到邀請後，登入 GitHub
-到右上角通知（或 Email）
-Accept invitation
-**第五步：Clone 專案到電腦**
-在桌面開啟 cmd
-輸入：
-git clone https://github.com/zxlprogram/UnityLessonsProject.git
-**第六步：用 Unity Hub 開啟專案**
-開啟 Unity Hub
-點選 Add → Add project from disk
-選擇 UnityLessonsProject 資料夾
-**第七步：開始編輯專案**
-正常在 Unity 裡寫程式、做場景、改素材
-**第八步：準備上傳修改**
-編輯完成後
-開啟 UnityLessonsProject 資料夾
-在該資料夾中開啟 cmd
-**第九步：第一次使用 Git（只需做一次）**
-git config --global user.name "你的GitHub使用者名稱"
-git config --global user.email "你註冊GitHub的Email"
-**第十步：上傳專案到 GitHub**
-git add .
-git commit -m "簡述你做了哪些修改"
-git push
-之後每次修改只需要重複 第十步
+GameManager.cs should reset the sliced object
