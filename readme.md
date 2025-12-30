@@ -165,3 +165,4 @@ Volume is calculated using the **Divergence Theorem**.
 * Story content not implemented
 * Sound effects not added
 * `GameManager.cs` should reset sliced objects
+* `GameManager.cs` should give the final score of two players
