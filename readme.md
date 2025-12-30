@@ -1,59 +1,167 @@
-# date
-start by: 2025-12-16 or earlier
+# Unity3D Slicing & Libra Game Project
 
-# author
-zxlprogram, GMLGY2VCrQ, hsifeng, yccct14, yuuuuu66
+## Date
 
-# connect us
-zhoudaniel02@gmail.com
-(or connect other groupmate)
+Start by **2025-12-16** (or earlier)
 
-# enviornment
-it's Unity project, it must runnable on every type of operating system which Unity supported
+## Author
 
-# Usage
-move your mouse to control the slicing plane
-cut the object
-move the piece and use the libra to compare it
+* zxlprogram
+* GMLGY2VCrQ
+* hsifeng
+* yccct14
+* yuuuuu66
 
-# description
-this is a Unity3D project for the unity lesson's final exam, used the EZ-slice mod and hsifeng builded the basic architecture, zxlprogram find the open-source program to research how does the mod working and build the libra. hsifeng import the knife model, cleaned up folders and yccct14 builded the game rule(pvp mode) and import the players model,also rewrite the splitter.cs to fit the project.
+## Contact
 
-this project are try to make a game, play a character to cut some object, the goal is trying to cut those object in closest weight(we suppose that all object have fixed density, so it have same result on comparing volume)
+* Email: **[zhoudaniel02@gmail.com](mailto:zhoudaniel02@gmail.com)**
+  (or contact any other groupmate)
 
-# principle of slicing
-suppose there have a convex 3D object, it is made by a lot of triangle(the triangle builded the surface, and the surface builded the 3D shape),and there's a plane ax+by+cz+d=0,if the plane have an intersection with a triangle means that triangle should cut in half, otherwise it means that part is belong to lower pieces or upper pieces(if the triangle is higher then plane means it's belong to upper pieces and same logic on lower pieces)
-suppose the triangle which have line of intersection with plane, and the point of intersection of plane and line is P' and Q', and the vertex of triangle is a,b,c
-there must have two vertex lower or upper than line, we make that two point to be a and b, we add triangle(a,b,P') and (b,P',Q') on the upper piece or lower piece and triangle(c,P',Q') for opposite pieces
-suddenly we have two piece of mesh, upper and lower mesh, we add two gameObject to add the mesh and remove the original 3D object
-that is how did ezslice cut an object to half.
+## Environment
 
-# principle of libra
-we have two script and three gameObject:
-the script for weighing pan(calcWeight) and balance beam(Libra)
-the calcWeight must do the calculate of weight(volume) which collided weighing the pan and save the float weight information
-and the Libra have an array to save the weighing pan gameObject, and if you want to compare the weight, you can catch the array's information and compare it.
-## how to calculate weight(volume)
-Divergence theorem
+* Unity3D project
+* Must be runnable on **all operating systems supported by Unity**
 
-# resources
-.obj file: tank(online resource), human(online resource), cube monster(author: zxlprogram), knife(source: by hsifeng), player*2(imported by yccct14)
+## Usage
 
-# history
-2025-12-16
--the project architecture is finished by hsifeng
+* Move the mouse to control the slicing plane
+* Slice the object
+* Move the sliced pieces onto the libra (balance scale) to compare their weights
 
-2025-12-19
--the project put on github repo by zxlprogram
+## Description
 
-2025-12-21
--added libra by zxlprogram
+This is a **Unity3D project for the Unity course final exam**.
 
-2025-12-30
--added the knife model by hsifeng
--added the players model*2 and builded the gamerule of pvp mode,also add the UI label by yccct14
+The project uses the **EZ-Slice** mod to perform real-time mesh slicing.
 
-# leak
-the story,
-sound effects,
-GameManager.cs should reset the sliced object
+### Team Contributions
+
+* **hsifeng**: Built the basic project architecture, imported the knife model, and cleaned up project folders
+* **zxlprogram**: Researched open-source slicing implementations, studied how EZ-Slice works, and implemented the libra (balance scale)
+* **yccct14**: Built the PvP game rules, imported two player models, added UI labels, and rewrote `Splitter.cs` to fit the project
+* Other members participated in integration and testing
+
+### Gameplay Goal
+
+The player controls a character to slice objects.
+The objective is to cut the object into pieces with **the closest possible weight**.
+
+We assume that:
+
+* All objects have **uniform density**
+* Therefore, **weight comparison equals volume comparison**
+
+## Principle of Slicing
+
+We assume a **convex 3D object** composed of many triangles:
+
+* Triangles form surfaces
+* Surfaces form the 3D mesh
+
+A slicing plane is defined as:
+
+```
+ax + by + cz + d = 0
+```
+
+### Triangle Classification
+
+For each triangle:
+
+* If the triangle is entirely on one side of the plane, it belongs to either the **upper mesh** or **lower mesh**
+* If the plane intersects the triangle, the triangle must be split
+
+### Triangle Splitting
+
+Let the triangle vertices be **a, b, c**:
+
+* Two vertices lie on one side of the plane (assume **a** and **b**)
+* One vertex lies on the opposite side (**c**)
+
+Let **P'** and **Q'** be the intersection points between the triangle edges and the slicing plane.
+
+We generate:
+
+* Two triangles:
+
+  * `(a, b, P')`
+  * `(b, P', Q')`
+    → added to one mesh (upper or lower)
+* One triangle:
+
+  * `(c, P', Q')`
+    → added to the opposite mesh
+
+### Result
+
+* The original mesh is split into **two new meshes**
+* Two new GameObjects are created
+* The original GameObject is removed
+
+This is the core principle used by **EZ-Slice** to cut an object in half.
+
+## Principle of Libra (Balance Scale)
+
+### Components
+
+* **Two scripts**
+
+  * `calcWeight` (weighing pan)
+  * `Libra` (balance beam)
+* **Three GameObjects**
+
+  * Two weighing pans
+  * One balance beam
+
+### Functionality
+
+* `calcWeight`:
+
+  * Detects objects colliding with the weighing pan
+  * Calculates and stores the **weight (volume)** as a `float`
+* `Libra`:
+
+  * Stores an array of weighing pan GameObjects
+  * Retrieves weight data from each pan
+  * Compares the weights to determine balance results
+
+### Weight (Volume) Calculation
+
+Volume is calculated using the **Divergence Theorem**.
+
+## Resources
+
+* `.obj` files:
+
+  * Tank (online resource)
+  * Human (online resource)
+  * Cube Monster (author: zxlprogram)
+* Knife model (source: hsifeng)
+* Player models ×2 (imported by yccct14)
+
+## History
+
+* **2025-12-16**
+
+  * Project architecture finished by hsifeng
+
+* **2025-12-19**
+
+  * Project uploaded to GitHub by zxlprogram
+
+* **2025-12-21**
+
+  * Libra system added by zxlprogram
+
+* **2025-12-30**
+
+  * Knife model added by hsifeng
+  * Player models ×2 imported
+  * PvP game rules implemented
+  * UI labels added by yccct14
+
+## Known Issues / Missing Features
+
+* Story content not implemented
+* Sound effects not added
+* `GameManager.cs` should reset sliced objects
