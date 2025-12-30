@@ -136,8 +136,8 @@ Volume is calculated using the **Divergence Theorem**.
   * Tank (online resource)
   * Human (online resource)
   * Cube Monster (author: zxlprogram)
-* Knife model (source: hsifeng)
-* Player models ×2 (imported by yccct14)
+  * Knife model (source: hsifeng)
+  * Player models ×2 (imported by yccct14)
 
 ## History
 
@@ -166,3 +166,4 @@ Volume is calculated using the **Divergence Theorem**.
 * Sound effects not added
 * `GameManager.cs` should reset sliced objects
 * `GameManager.cs` should give the final score of two players
+* the game menu
