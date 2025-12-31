@@ -36,7 +36,7 @@ The project uses the **EZ-Slice** mod to perform real-time mesh slicing.
 
 ### Team Contributions
 
-* **hsifeng**: Built the basic project architecture, imported the knife model, and cleaned up project folders
+* **hsifeng**: Built the basic project architecture, imported the knife model, and cleaned up project folders;built the game menu and level select architecture.
 * **zxlprogram**: Researched open-source slicing implementations, studied how EZ-Slice works, and implemented the libra (balance scale)
 * **yccct14**: Built the PvP game rules, imported two player models, added UI labels, and rewrote `Splitter.cs` to fit the project
 * Other members participated in integration and testing
@@ -160,10 +160,12 @@ Volume is calculated using the **Divergence Theorem**.
   * PvP game rules implemented
   * UI labels added by yccct14
 
+* **2025-12-31**
+  * game menu and level select architecture finished by hsifeng
+
 ## Known Issues / Missing Features
 
 * Story content not implemented
 * Sound effects not added
 * `GameManager.cs` should reset sliced objects
-* `GameManager.cs` should give the final score of two players
-* the game menu
+* `GameManager.cs` should give the final score of two player
