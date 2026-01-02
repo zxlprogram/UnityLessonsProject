@@ -15,7 +15,7 @@ Start by **2025-12-16** (or earlier)
 ## Contact
 
 * Email: **[zhoudaniel02@gmail.com](mailto:zhoudaniel02@gmail.com)**
-  (or contact any other groupmate)
+  (or contact any other groupmate)
 
 ## Environment
 
@@ -84,14 +84,100 @@ We generate:
 
 * Two triangles:
 
-  * `(a, b, P')`
-  * `(b, P', Q')`
-    → added to one mesh (upper or lower)
+  * `(a, b, P')`
+  * `(b, P', Q')`
+    → added to one mesh (upper or lower)
 * One triangle:
 
-  * `(c, P', Q')`
-    → added to the opposite mesh
+  * `(c, P', Q')`
+    → added to the opposite mesh
 
+### Result
+
+* The original mesh is split into **two new meshes**
+* Two new GameObjects are created
+* The original GameObject is removed
+
+This is the core principle used by **EZ-Slice** to cut an object in half.
+
+## Principle of Libra (Balance Scale)
+
+### Components
+
+* **Two scripts**
+
+  * `calcWeight` (weighing pan)
+  * `Libra` (balance beam)
+* **Three GameObjects**
+
+  * Two weighing pans
+  * One balance beam
+
+### Functionality
+
+* `calcWeight`:
+
+  * Detects objects colliding with the weighing pan
+  * Calculates and stores the **weight (volume)** as a `float`
+* `Libra`:
+
+  * Stores an array of weighing pan GameObjects
+  * Retrieves weight data from each pan
+  * Compares the weights to determine balance results
+
+### Weight (Volume) Calculation
+
+Volume is calculated using the **Divergence Theorem**.
+
+## Game Process
+the process controlled by `GameManager.cs`
+
+### Process
+There has two players in the game, at first, player will control player 1 to sliced objects, when finished, **the sliced object must reset** and the player 2 will do the same thing too. two players showed and**the final score must be showed to compare who is the winner.** the player who sliced closest weight is the winner.
+
+### menu
+the game name and start button showed at first, when the button clicked, the game will show the tutorial scene, and the next is the Level selecting scene, there has three level. The game would played in each level's scene.
+
+## Resources
+
+* `.obj` files:
+
+  * Tank (online resource)
+  * Human (online resource)
+  * Cube Monster (author: zxlprogram)
+  * Knife model (source: hsifeng)
+  * Player models ×2 (imported by yccct14)
+
+## History
+
+* **2025-12-16**
+
+  * Project architecture finished by hsifeng
+
+* **2025-12-19**
+
+  * Project uploaded to GitHub by zxlprogram
+
+* **2025-12-21**
+
+  * Libra system added by zxlprogram
+
+* **2025-12-30**
+
+  * Knife model added by hsifeng
+  * Player models ×2 imported
+  * PvP game rules implemented
+  * UI labels added by yccct14
+
+* **2025-12-31**
+  * game menu and level select architecture finished by hsifeng
+
+## Known Issues / Missing Features
+
+* Story content not implemented
+* Sound effects not added
+* `GameManager.cs` should reset sliced objects
+* `GameManager.cs` should give the final score of two player
 ### Result
 
 * The original mesh is split into **two new meshes**
