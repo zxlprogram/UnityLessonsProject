@@ -39,6 +39,7 @@ The project uses the **EZ-Slice** mod to perform real-time mesh slicing.
 * **hsifeng**: Built the basic project architecture, imported the knife model, and cleaned up project folders;built the game menu and level select architecture.
 * **zxlprogram**: Researched open-source slicing implementations, studied how EZ-Slice works, and implemented the libra (balance scale)
 * **yccct14**: Built the PvP game rules, imported two player models, added UI labels, and rewrote `Splitter.cs` to fit the project
+* **yuuuuu66**: Finished the final feature of game manager(reset slicedobjects and final rank)
 * Other members participated in integration and testing
 
 ### Gameplay Goal
@@ -133,7 +134,7 @@ Volume is calculated using the **Divergence Theorem**.
 the process controlled by `GameManager.cs`
 
 ### Process
-There has two players in the game, at first, player will control player 1 to sliced objects, when finished, **the sliced object must reset** and the player 2 will do the same thing too. two players showed and**the final score must be showed to compare who is the winner.** the player who sliced closest weight is the winner.
+There has two players in the game, at first, player will control player 1 to sliced objects, when finished, the sliced object will reset and the player 2 will do the same thing too. two players showed and the final score would be showed to compare who is the winner. the player who sliced closest weight is the winner.
 
 ### menu
 the game name and start button showed at first, when the button clicked, the game will show the tutorial scene, and the next is the Level selecting scene, there has three level. The game would played in each level's scene.
@@ -171,6 +172,9 @@ the game name and start button showed at first, when the button clicked, the gam
 
 * **2025-12-31**
   * game menu and level select architecture finished by hsifeng
+
+* **2026-12-05**
+  * final feature of game manager(resry sliced objects and final rank) finished by yuuuuu66
 
 ## Known Issues / Missing Features
 
@@ -251,7 +255,4 @@ Volume is calculated using the **Divergence Theorem**.
 
 ## Known Issues / Missing Features
 
-* Story content not implemented
 * Sound effects not added
-* `GameManager.cs` should reset sliced objects
-* `GameManager.cs` should give the final score of two player
