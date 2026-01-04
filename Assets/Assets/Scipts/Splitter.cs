@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EzySlice;
@@ -57,33 +57,56 @@ public class Splitter : MonoBehaviour
             }*/
         }
     }
-    public void DoSlice()  //¤Á³Î¥\¯à
+    public void DoSlice()  //åˆ‡å‰²åŠŸèƒ½
     {
+        if (!GameManager.Instance.canSlice) return;
+
         Collider[] colliders = Physics.OverlapBox(
             transform.position,
             new Vector3(4, 0.005f, 5),
             transform.rotation
         );
 
+        // æ”¶é›†å”¯ä¸€ç›®æ¨™ï¼ˆé¿å…åŒä¸€ç‰©ä»¶å¤šå€‹ colliderï¼‰
+        List<GameObject> targets = new List<GameObject>();
+        HashSet<int> seen = new HashSet<int>();
         foreach (Collider c in colliders)
         {
             if (!c.CompareTag("slicedObj")) continue;
 
-            SlicedHull hull = c.gameObject.Slice(transform.position, transform.up);
+            GameObject target = c.attachedRigidbody ? c.attachedRigidbody.gameObject : c.transform.root.gameObject;
+            if (target == null) continue;
+
+            int id = target.GetInstanceID();
+            if (seen.Contains(id)) continue;
+            seen.Add(id);
+            targets.Add(target);
+        }
+
+        if (targets.Count == 0) return;
+
+        bool slicedAny = false;
+        foreach (GameObject target in targets)
+        {
+            SlicedHull hull = target.Slice(transform.position, transform.up);
             if (hull == null) continue;
 
-            GameObject lower = hull.CreateLowerHull(c.gameObject, matCross);
-            GameObject upper = hull.CreateUpperHull(c.gameObject, matCross);
+            GameObject lower = hull.CreateLowerHull(target, matCross);
+            GameObject upper = hull.CreateUpperHull(target, matCross);
 
-            Destroy(c.gameObject);
+            Destroy(target);
 
-            SetupPiece(upper, false); //¤W­±¤£±¼¤U­±±¼
+            // ä¸ŠåŠéƒ¨ç•™åœ¨åŸåœ°ï¼Œä¸‹åŠéƒ¨æ‰åˆ°å¤©å¹³
+            SetupPiece(upper, false);
             SetupPiece(lower, true);
 
-            GameManager.Instance.OnSliceFinished(0f);
+            slicedAny = true;
         }
+
+        if (slicedAny)
+            GameManager.Instance.OnSliceFinished(0f);
     }
-    void SetupPiece(GameObject obj, bool drop)  //³]©w¤Á³Î«áª«¥óÄİ©Ê
+    void SetupPiece(GameObject obj, bool drop)  //è¨­å®šåˆ‡å‰²å¾Œç‰©ä»¶å±¬æ€§
     {
         obj.tag = "slicedObj";
 
@@ -93,5 +116,7 @@ public class Splitter : MonoBehaviour
         Rigidbody rb = obj.AddComponent<Rigidbody>();
         rb.useGravity = drop;
         rb.isKinematic = !drop;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 }
