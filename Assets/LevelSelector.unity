@@ -657,7 +657,17 @@ PrefabInstance:
     - target: {fileID: 6223156556514517998, guid: eb9a2a2ada4984842b8d1fd4ca0b78ca,
         type: 3}
       propertyPath: m_text
-      value: 3
+      value: unknown
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223156556514517998, guid: eb9a2a2ada4984842b8d1fd4ca0b78ca,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223156556514517998, guid: eb9a2a2ada4984842b8d1fd4ca0b78ca,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8776184282531551786, guid: eb9a2a2ada4984842b8d1fd4ca0b78ca,
         type: 3}
@@ -785,7 +795,9 @@ PrefabInstance:
     - target: {fileID: 6223156556514517998, guid: eb9a2a2ada4984842b8d1fd4ca0b78ca,
         type: 3}
       propertyPath: m_text
-      value: 2
+      value: 'PVP
+
+        Mode'
       objectReference: {fileID: 0}
     - target: {fileID: 8776184282531551786, guid: eb9a2a2ada4984842b8d1fd4ca0b78ca,
         type: 3}
@@ -1022,6 +1034,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223156556514517998, guid: eb9a2a2ada4984842b8d1fd4ca0b78ca,
+        type: 3}
+      propertyPath: m_text
+      value: 'Single
+
+        player'
       objectReference: {fileID: 0}
     - target: {fileID: 8776184282531551786, guid: eb9a2a2ada4984842b8d1fd4ca0b78ca,
         type: 3}
