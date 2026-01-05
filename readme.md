@@ -36,7 +36,7 @@ The project uses the **EZ-Slice** mod to perform real-time mesh slicing.
 
 ### Team Contributions
 
-* **hsifeng**: Built the basic project architecture, imported the knife model, and cleaned up project folders;built the game menu and level select architecture.
+* **hsifeng**: Built the basic project architecture, imported the knife model, and cleaned up project folders;built the game menu and level select architecture, also added the single player mode architecture.
 * **zxlprogram**: Researched open-source slicing implementations, studied how EZ-Slice works, and implemented the libra (balance scale)
 * **yccct14**: Built the PvP game rules, imported two player models, added UI labels, and rewrote `Splitter.cs` to fit the project
 * **yuuuuu66**: Finished the final feature of game manager(reset slicedobjects and final rank)
@@ -175,13 +175,8 @@ the game name and start button showed at first, when the button clicked, the gam
 
 * **2026-12-05**
   * final feature of game manager(resry sliced objects and final rank) finished by yuuuuu66
+  * single player gamemode architecture added by hsifeng
 
-## Known Issues / Missing Features
-
-* Story content not implemented
-* Sound effects not added
-* `GameManager.cs` should reset sliced objects
-* `GameManager.cs` should give the final score of two player
 ### Result
 
 * The original mesh is split into **two new meshes**
@@ -190,69 +185,8 @@ the game name and start button showed at first, when the button clicked, the gam
 
 This is the core principle used by **EZ-Slice** to cut an object in half.
 
-## Principle of Libra (Balance Scale)
-
-### Components
-
-* **Two scripts**
-
-  * `calcWeight` (weighing pan)
-  * `Libra` (balance beam)
-* **Three GameObjects**
-
-  * Two weighing pans
-  * One balance beam
-
-### Functionality
-
-* `calcWeight`:
-
-  * Detects objects colliding with the weighing pan
-  * Calculates and stores the **weight (volume)** as a `float`
-* `Libra`:
-
-  * Stores an array of weighing pan GameObjects
-  * Retrieves weight data from each pan
-  * Compares the weights to determine balance results
-
-### Weight (Volume) Calculation
-
-Volume is calculated using the **Divergence Theorem**.
-
-## Resources
-
-* `.obj` files:
-
-  * Tank (online resource)
-  * Human (online resource)
-  * Cube Monster (author: zxlprogram)
-  * Knife model (source: hsifeng)
-  * Player models ×2 (imported by yccct14)
-
-## History
-
-* **2025-12-16**
-
-  * Project architecture finished by hsifeng
-
-* **2025-12-19**
-
-  * Project uploaded to GitHub by zxlprogram
-
-* **2025-12-21**
-
-  * Libra system added by zxlprogram
-
-* **2025-12-30**
-
-  * Knife model added by hsifeng
-  * Player models ×2 imported
-  * PvP game rules implemented
-  * UI labels added by yccct14
-
-* **2025-12-31**
-  * game menu and level select architecture finished by hsifeng
-
 ## Known Issues / Missing Features
 
 * Sound effects not added
+* single playermode needed the story
+* single playermode needed the vectory screen
