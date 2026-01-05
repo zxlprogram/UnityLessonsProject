@@ -14,7 +14,19 @@ public class Test : MonoBehaviour
     public float stayTime = 0.1f;
     public float upTime = 0.5f;
 
+    [Header("偵測設定")]
+    // 建議數值：X=4, Y=1, Z=5 (Y 不需要太大，因為下落時會持續掃描)
+    public Vector3 detectArea = new Vector3(4f, 1f, 5f);
+
+    [Header("UI 顯示")]
+    public GameObject resultUI;
+
     private bool isSlicing = false;
+
+    void Start()
+    {
+        if (resultUI != null) resultUI.SetActive(false);
+    }
 
     void Update()
     {
@@ -36,17 +48,29 @@ public class Test : MonoBehaviour
         Vector3 endPos = startPos + Vector3.down * dropDistance;
 
         float t = 0;
+        bool hasSliced = false; // 用來確保一次下刀只切一次
+
+        // --- 1. 下落階段 ---
         while (t < 1)
         {
             t += Time.deltaTime / downTime;
             transform.position = Vector3.Lerp(startPos, endPos, t);
+
+            // 在下落的每一幀都進行偵測，直到切到東西為止
+            if (!hasSliced)
+            {
+                if (ExecuteSliceLogic())
+                {
+                    hasSliced = true; // 成功切到，標記起來
+                }
+            }
             yield return null;
         }
 
-        ExecuteSliceLogic();
-
+        // --- 2. 停頓階段 ---
         yield return new WaitForSeconds(stayTime);
 
+        // --- 3. 回彈階段 ---
         t = 0;
         while (t < 1)
         {
@@ -59,19 +83,16 @@ public class Test : MonoBehaviour
         isSlicing = false;
     }
 
-    void ExecuteSliceLogic()
+    // 將回傳值改為 bool，讓協程知道是否切到了
+    bool ExecuteSliceLogic()
     {
-        Vector3 halfExtents = new Vector3(4f, 1f, 5f);
-        Collider[] colliders = Physics.OverlapBox(transform.position, halfExtents, transform.rotation);
-
-        // 如果連碰撞都沒偵測到，輸出 Log
-        if (colliders.Length == 0) Debug.Log("未偵測到任何碰撞體");
+        Collider[] colliders = Physics.OverlapBox(transform.position, detectArea, transform.rotation);
+        bool hitAnything = false;
 
         foreach (Collider c in colliders)
         {
             if (!c.CompareTag("slicedObj")) continue;
 
-            // 取得原始重量
             float originalMass = 1.0f;
             Rigidbody rbOriginal = c.GetComponent<Rigidbody>();
             if (rbOriginal != null) originalMass = rbOriginal.mass;
@@ -84,55 +105,73 @@ public class Test : MonoBehaviour
                 GameObject lower = hull.CreateLowerHull(c.gameObject, matCross);
                 GameObject upper = hull.CreateUpperHull(c.gameObject, matCross);
 
-                // 計算兩者體積比例來分配重量
+                // --- 1. 計算比例並存儲到 GameData ---
                 float vLower = GetVolume(lower);
                 float vUpper = GetVolume(upper);
                 float totalV = vLower + vUpper;
 
-                // 設定物理屬性與重量
-                Rigidbody rbL = SetupPiece(lower, originalMass * (vLower / totalV));
-                Rigidbody rbU = SetupPiece(upper, originalMass * (vUpper / totalV));
+                if (totalV > 0)
+                {
+                    GameData.UpperPercent = (vUpper / totalV) * 100f;
+                    GameData.LowerPercent = (vLower / totalV) * 100f;
+                    Debug.Log($"成功切割並儲存: 上 {GameData.UpperPercent:F1}% : 下 {GameData.LowerPercent:F1}%");
+                }
 
-                // *** 這裡就是你要的重量 Log ***
-                Debug.Log($"<color=yellow>切割成功！</color>");
-                Debug.Log($"下塊重量 (Lower): {rbL.mass} 份");
-                Debug.Log($"上塊重量 (Upper): {rbU.mass} 份");
+                // --- 2. 顯示 Next 按鈕 ---
+                if (resultUI != null) resultUI.SetActive(true);
+
+                // --- 3. 處理物理 (包含過於複雜模型的報錯修正) ---
+                SetupPiece(lower, originalMass * (vLower / totalV));
+                SetupPiece(upper, originalMass * (vUpper / totalV));
 
                 Destroy(c.gameObject);
+                hitAnything = true;
 
                 if (GameManager.Instance != null)
-                    GameManager.Instance.OnSliceFinished(rbL.mass + rbU.mass);
-            }
-            else
-            {
-                Debug.LogWarning("EzySlice: 切割失敗，可能是刀刃位置不在模型網格內");
+                    GameManager.Instance.OnSliceFinished(originalMass);
             }
         }
+        return hitAnything;
     }
 
-    // 輔助函式：設定碎片的物理組件
     Rigidbody SetupPiece(GameObject obj, float mass)
     {
         Rigidbody rb = obj.AddComponent<Rigidbody>();
-        obj.AddComponent<MeshCollider>().convex = true;
         rb.mass = mass;
+
+        MeshFilter mf = obj.GetComponent<MeshFilter>();
+        MeshCollider mc = obj.AddComponent<MeshCollider>();
+
+        if (mf != null && mf.sharedMesh != null)
+        {
+            mc.sharedMesh = mf.sharedMesh;
+            if (mf.sharedMesh.vertexCount < 250)
+            {
+                mc.convex = true;
+            }
+            else
+            {
+                DestroyImmediate(mc);
+                obj.AddComponent<BoxCollider>();
+            }
+        }
         return rb;
     }
 
-    // 輔助函式：估算網格體積
     float GetVolume(GameObject obj)
     {
-        Mesh mesh = obj.GetComponent<MeshFilter>().sharedMesh;
-        if (mesh == null) return 1f;
-        Vector3 s = mesh.bounds.size;
+        MeshFilter mf = obj.GetComponent<MeshFilter>();
+        if (mf == null || mf.sharedMesh == null) return 0.1f;
+
+        Vector3 s = mf.sharedMesh.bounds.size;
         return s.x * s.y * s.z;
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Vector3 gizmoPos = transform.position + (isSlicing ? Vector3.zero : Vector3.down * dropDistance);
-        Gizmos.matrix = Matrix4x4.TRS(gizmoPos, transform.rotation, Vector3.one);
-        Gizmos.DrawWireCube(Vector3.zero, new Vector3(8f, 2f, 10f));
+        // Gizmos 會跟著刀子的當前位置畫出偵測範圍
+        Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, detectArea * 2);
     }
 }
