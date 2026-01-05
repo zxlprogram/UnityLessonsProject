@@ -16,6 +16,9 @@ public class Test : MonoBehaviour
 
     private bool isSlicing = false;
 
+    public SliceUIController uiController;
+    public AudioSource sliceSE;
+
     void Update()
     {
         if (isSlicing) return;
@@ -61,6 +64,10 @@ public class Test : MonoBehaviour
 
     void ExecuteSliceLogic()
     {
+
+        float leftWeight = 0f;
+        float rightWeight = 0f;
+
         Vector3 halfExtents = new Vector3(4f, 1f, 5f);
         Collider[] colliders = Physics.OverlapBox(transform.position, halfExtents, transform.rotation);
 
@@ -81,6 +88,7 @@ public class Test : MonoBehaviour
 
             if (hull != null)
             {
+                if (sliceSE != null) sliceSE.Play();
                 GameObject lower = hull.CreateLowerHull(c.gameObject, matCross);
                 GameObject upper = hull.CreateUpperHull(c.gameObject, matCross);
 
@@ -102,6 +110,7 @@ public class Test : MonoBehaviour
 
                 if (GameManager.Instance != null)
                     GameManager.Instance.OnSliceFinished(rbL.mass + rbU.mass);
+
             }
             else
             {

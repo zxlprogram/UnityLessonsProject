@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text resultNameText; // 左側玩家名稱
     public GameObject resultPanel;
+    public GameObject backBtn; 
     public RectTransform resultNameAnchor; // 左側名稱定位
     public Transform resultModelAnchor;    // 右側模型定位
     public calcWeight leftPan;
@@ -310,6 +311,11 @@ public class GameManager : MonoBehaviour
         SetPlayerControl(player2, false);
         canSlice = false;
 
+        // 顯示返回按鈕
+        if (backBtn != null)
+            backBtn.SetActive(true);
+
+
         // 只顯示獲勝玩家模型，平手則顯示兩個
         if (winner != null && loser != null)
         {
@@ -376,5 +382,12 @@ public class GameManager : MonoBehaviour
         {
             r.enabled = true; // 確保模型被顯示
         }
+    }
+
+    // 返回模式選擇畫面
+    public void BackToModeSelect()
+    {
+        GameObject.Find("BGM")?.GetComponent<AudioSource>()?.Stop();
+        SceneManager.LoadScene("StartScene"); 
     }
 }
