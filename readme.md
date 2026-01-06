@@ -36,9 +36,9 @@ The project uses the **EZ-Slice** mod to perform real-time mesh slicing.
 
 ### Team Contributions
 
-* **hsifeng**: Built the basic project architecture, imported the knife model, and cleaned up project folders;built the game menu and level select architecture, also added the single player mode architecture.
+* **hsifeng**: Built the basic project architecture, imported the knife model, and cleaned up project folders;built the game menu and level select architecture, also added the single player mode architecture.added the voice settings and finished the single player gamemode.
 * **zxlprogram**: Researched open-source slicing implementations, studied how EZ-Slice works, and implemented the libra (balance scale) and wrote the tutorial
-* **yccct14**: Built the PvP game rules, imported two player models, added UI labels, and rewrote `Splitter.cs` to fit the project
+* **yccct14**: Built the PvP game rules, imported two player models, added UI labels, and rewrote `Splitter.cs` to fit the project;added the sound effect
 * **yuuuuu66**: Finished the final feature of game manager(reset slicedobjects and final rank)
 * Other members participated in integration and testing
 
@@ -174,9 +174,15 @@ the game name and start button showed at first, when the button clicked, the gam
   * game menu and level select architecture finished by hsifeng
   * game menu finished by zxlprogram(tutorial, game title)
 
-* **2026-12-05**
+* **2026-01-05**
   * final feature of game manager(resry sliced objects and final rank) finished by yuuuuu66
   * single player gamemode architecture added by hsifeng
+
+* **2026-01-06**
+  * single player done by hsifeng
+  * voice settings added by hsifeng
+  * UI refresh by hsifeng
+  * sound effect added by yccct14
 
 ### Result
 
@@ -188,6 +194,4 @@ This is the core principle used by **EZ-Slice** to cut an object in half.
 
 ## Known Issues / Missing Features
 
-* Sound effects not added
-* single playermode needed the story
-* single playermode needed the vectory screen
+all done.

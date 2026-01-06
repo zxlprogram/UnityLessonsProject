@@ -7,6 +7,7 @@ public class ButtonTo : MonoBehaviour
     public string targetScene;
     public void StartMenu()
     {
+        Debug.Log("go to scene: " + targetScene);
         SceneManager.LoadScene(targetScene);
     }
 }
